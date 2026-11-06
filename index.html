@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enciclopédia de Coquetéis | PDS Soluções Criativas</title>
+  <!-- Favicon na pasta img -->
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <!-- Tipografia Editorial: Playfair Display para títulos e Inter para leitura -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. VARIÁVEIS E RESET (IDENTIDADE PREMIUM)
+       ========================================================================== */
+    :root {
+      --bg-dark: #0f0f11;
+      --bg-card: #18181c;
+      --bg-modal: #1e1e24;
+      --accent-gold: #d4af37;
+      --accent-gold-hover: #f3e5ab;
+      --accent-bronze: #8c6d3f;
+      --text-main: #e2e2e8;
+      --text-muted: #9a9ab0;
+      --border-color: rgba(212, 175, 55, 0.2);
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* ==========================================================================
+       2. CABEÇALHO E APRESENTAÇÃO
+       ========================================================================== */
+    header {
+      padding: 48px 0 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 40px;
+    }
+
+    .header-tag {
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-family: var(--font-heading);
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       3. OUTDOOR DIGITAL (BANNER ROTATIVO 16:9)
+       ========================================================================== */
+    .banner-section {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 450px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      position: relative;
+      display: none;
+    }
+
+    .banner-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease-in-out, visibility 0.8s;
+      display: flex;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .banner-slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .banner-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(15, 15, 17, 0.95) 0%, rgba(15, 15, 17, 0.7) 60%, rgba(15, 15, 17, 0.3) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 60px;
+      max-width: 650px;
+    }
+
+    .banner-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .banner-title {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .banner-description {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .banner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--accent-gold);
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      transition: var(--transition);
+      width: fit-content;
+    }
+
+    .banner-btn:hover {
+      background: var(--accent-gold-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       4. CONTROLES (BUSCA E FILTROS DE TEOR ALCOÓLICO)
+       ========================================================================== */
+    .controls-section {
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+    }
+
+    .alcohol-filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-body);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent-gold);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    .results-count {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       5. GRADE DE CARDS
+       ========================================================================== */
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .drink-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .drink-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-color);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-img-wrapper {
+      width: 100%;
+      height: 240px;
+      background: #121215;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .drink-card:hover .card-img {
+      transform: scale(1.04);
+    }
+
+    .ai-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--accent-gold);
+      font-size: 0.65rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      z-index: 2;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .card-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-method {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .card-ingredients-preview {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .card-link {
+      color: var(--accent-gold);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       6. MODAL DA FICHA TÉCNICA
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      background: var(--bg-modal);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      z-index: 10;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    .modal-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #121215;
+    }
+
+    .modal-header-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      padding: 32px;
+    }
+
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .modal-subtitle {
+      color: var(--accent-gold);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    .modal-section {
+      margin-bottom: 24px;
+    }
+
+    .modal-section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding-bottom: 4px;
+    }
+
+    .ingredients-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .ingredients-list li {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      border-left: 2px solid var(--accent-gold);
+    }
+
+    .text-block {
+      color: var(--text-main);
+      font-size: 0.98rem;
+      white-space: pre-line;
+    }
+
+    .background-block {
+      font-family: var(--font-heading);
+      font-style: italic;
+      background: rgba(212, 175, 55, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 20px;
+      border-radius: 8px;
+      color: #e0e0e8;
+      line-height: 1.7;
+    }
+
+    /* ==========================================================================
+       7. ESTADOS DE CARREGAMENTO E RODAPÉ INSTITUCIONAL
+       ========================================================================== */
+    .status-container {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .spinner {
+      border: 3px solid rgba(212, 175, 55, 0.1);
+      border-top: 3px solid var(--accent-gold);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn-retry {
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: var(--accent-gold);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-retry:hover {
+      background: var(--accent-gold-hover);
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 30px 24px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    footer p strong {
+      color: var(--accent-gold);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .modal-body { padding: 20px; }
+      .modal-img-wrapper { height: 220px; }
+      .ingredients-list { grid-template-columns: 1fr; }
+      .banner-overlay { padding: 20px 30px; }
+      .banner-title { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="header-tag">ENCICLOPÉDIA DA COQUETELARIA</div>
+      <h1>OS DRINKS MAIS ICÔNICOS DO MUNDO</h1>
+      <p class="subtitle">Uma viagem pelos sabores, personagens e segredos dos coquetéis mais famosos de todos os tempos</p>
+    </header>
+
+    <!-- Outdoor Digital (Banner Rotativo) -->
+    <section id="bannerSection" class="banner-section"></section>
+
+    <section class="controls-section">
+      <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar por nome ou ingrediente..." disabled>
+      </div>
+
+      <!-- Filtros de Teor Alcoólico -->
+      <div class="alcohol-filters">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="alcoholic">Apenas Alcóolicos</button>
+        <button class="filter-btn" data-filter="non-alcoholic">Apenas Não-Alcóolicos</button>
+      </div>
+
+      <div id="resultsCount" class="results-count"></div>
+    </section>
+
+    <!-- Área de Status (Loading / Erro) -->
+    <div id="statusContainer" class="status-container">
+      <div class="spinner"></div>
+      <p>Carregando catálogo de coquetéis...</p>
+    </div>
+
+    <!-- Grade de Drinks -->
+    <main id="drinksGrid" class="drinks-grid" style="display: none;"></main>
+  </div>
+
+  <!-- Rodapé Institucional -->
+  <footer>
+    <p>O consumo de bebida alcoólica é expressamente proibido para menores de 18 anos. Beba com Moderação.</p>
+    <p>A Enciclopédia de Coquetéis©  é uma propriedade da <strong>PDS Soluções Criativas</strong> | Todos os Direitos Reservados.</p>
+  </footer>
+
+  <!-- Modal Ficha Técnica -->
+  <div id="drinkModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-container">
+      <button id="modalCloseBtn" class="modal-close" aria-label="Fechar">&times;</button>
+      
+      <div class="modal-img-wrapper">
+        <div class="ai-badge">Imagem ilustrativa gerada com auxílio da IA</div>
+        <div id="modalImageContainer" style="width:100%; height:100%;"></div>
+      </div>
+
+      <div class="modal-body">
+        <h2 id="modalTitle" class="modal-title"></h2>
+        <div id="modalMethod" class="modal-subtitle"></div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Ingredientes</div>
+          <ul id="modalIngredients" class="ingredients-list"></ul>
+        </div>
+
+        <div id="guarnicaoSection" class="modal-section">
+          <div class="modal-section-title">Guarnição</div>
+          <div id="modalGuarnicao" class="text-block"></div>
+        </div>
+
+        <div id="preparoSection" class="modal-section">
+          <div class="modal-section-title">Modo de Preparo</div>
+          <div id="modalPreparo" class="text-block"></div>
+        </div>
+
+        <div id="backgroundSection" class="modal-section">
+          <div class="modal-section-title">História e Curiosidades</div>
+          <div id="modalBackground" class="background-block"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       CONFIGURAÇÃO DA API
+       ========================================================================== */
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzR75ZT38Kl1EigM--Xm_Jyz6hnyELtonsKbdJVJw_qnMNermEUCZZ1d3rm9woa81OpEA/exec';
+
+    /* ==========================================================================
+       ESTADO DA APLICAÇÃO
+       ========================================================================== */
+    let allDrinks = [];
+    let filteredDrinks = [];
+    let bannersList = [];
+    let currentBannerIndex = 0;
+    let bannerInterval = null;
+    let currentAlcoholFilter = 'all';
+
+    /* ==========================================================================
+       ELEMENTOS DOM
+       ========================================================================== */
+    const searchInput = document.getElementById('searchInput');
+    const resultsCount = document.getElementById('resultsCount');
+    const statusContainer = document.getElementById('statusContainer');
+    const drinksGrid = document.getElementById('drinksGrid');
+    const drinkModal = document.getElementById('drinkModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const bannerSection = document.getElementById('bannerSection');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    /* ==========================================================================
+       INICIALIZAÇÃO
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      initApp();
+      setupEventListeners();
+    });
+
+    async function initApp() {
+      showLoading('Consultando catálogo...');
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('Falha na resposta da API');
+
+        const data = await response.json();
+        
+        // Trata a nova estrutura da API (contendo drinks e banners)
+        const rawDrinks = Array.isArray(data) ? data : (data.drinks || data.data || []);
+        bannersList = Array.isArray(data.banners) ? data.banners : [];
+
+        allDrinks = rawDrinks.map(drink => {
+          const alcoolicoRaw = String(drink.alcoolico !== undefined ? drink.alcoolico : '1').trim();
+          const isAlcoholic = alcoolicoRaw === '1' || alcoolicoRaw.toLowerCase() === 'sim' || alcoolicoRaw.toLowerCase() === 'true';
+
+          return {
+            id: drink.id || '',
+            nome: drink.nome_drink || drink.nome || 'Sem nome',
+            ingredientes: drink.ingredientes_qtd || '',
+            metodo: drink.metodo || '',
+            guarnicao: drink.guarnicao || '',
+            preparo: drink.preparo || '',
+            background: drink.background || '',
+            img: drink.img || '',
+            alcoolico: isAlcoholic
+          };
+        });
+
+        // Ordenação alfabética
+        allDrinks.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' }));
+
+        // Renderiza o Banner se houver registros
+        renderBanners(bannersList);
+
+        enableControls();
+        applyFilters();
+
+      } catch (err) {
+        console.error('Erro de carregamento:', err);
+        showError('Não foi possível carregar os drinks. Verifique sua conexão.');
+      }
+    }
+
+    /* ==========================================================================
+       TRATAMENTO DO CAMINHO DA IMAGEM
+       ========================================================================== */
+    function resolveImagePath(imgPath) {
+      if (!imgPath || imgPath.trim() === '') return '';
+      const trimmed = imgPath.trim();
+      if (trimmed.startsWith('http') || trimmed.startsWith('img/')) {
+        return trimmed;
+      }
+      return `img/${trimmed}`;
+    }
+
+    /* ==========================================================================
+       RENDERIZAÇÃO E ROTATION DO BANNER (OUTDOOR DIGITAL)
+       ========================================================================== */
+    function renderBanners(banners) {
+      if (!banners || banners.length === 0) {
+        bannerSection.style.display = 'none';
+        return;
+      }
+
+      bannerSection.style.display = 'block';
+      bannerSection.innerHTML = '';
+
+      banners.forEach((banner, index) => {
+        const slide = document.createElement('div');
+        slide.className = `banner-slide ${index === 0 ? 'active' : ''}`;
+        
+        const imgPath = resolveImagePath(banner.img);
+        if (imgPath) {
+          slide.style.backgroundImage = `url('${imgPath}')`;
+        }
+
+        const overlay = document.createElement('div');
+        overlay.className = 'banner-overlay';
+
+        const tag = document.createElement('div');
+        tag.className = 'banner-tag';
+        tag.textContent = 'NOVIDADES';
+
+        const title = document.createElement('h2');
+        title.className = 'banner-title';
+        title.textContent = banner.produto || 'Produto Especial';
+
+        const desc = document.createElement('p');
+        desc.className = 'banner-description';
+        desc.textContent = banner.descricao || '';
+
+        overlay.appendChild(tag);
+        overlay.appendChild(title);
+        overlay.appendChild(desc);
+
+        if (banner.link && banner.link.trim() !== '') {
+          const btn = document.createElement('a');
+          btn.className = 'banner-btn';
+          btn.href = banner.link;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+          btn.innerHTML = 'Saiba mais &rarr;';
+          overlay.appendChild(btn);
+        }
+
+        slide.appendChild(overlay);
+        bannerSection.appendChild(slide);
+      });
+
+      // Inicia carrossel automático a cada 10 segundos caso haja mais de 1 banner
+      if (banners.length > 1) {
+        if (bannerInterval) clearInterval(bannerInterval);
+        bannerInterval = setInterval(nextBannerSlide, 10000);
+      }
+    }
+
+    function nextBannerSlide() {
+      const slides = bannerSection.querySelectorAll('.banner-slide');
+      if (slides.length === 0) return;
+
+      slides[currentBannerIndex].classList.remove('active');
+      currentBannerIndex = (currentBannerIndex + 1) % slides.length;
+      slides[currentBannerIndex].classList.add('active');
+    }
+
+    /* ==========================================================================
+       CONTROLES
+       ========================================================================== */
+    function enableControls() {
+      searchInput.disabled = false;
+    }
+
+    function normalizeText(str) {
+      return (str || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    }
+
+    /* ==========================================================================
+       BUSCA INTELIGENTE E FILTROS DE TEOR ALCOÓLICO
+       ========================================================================== */
+    function applyFilters() {
+      const searchTerm = normalizeText(searchInput.value);
+
+      // Filtra por teor alcoólico primeiro
+      let baseList = allDrinks.filter(drink => {
+        if (currentAlcoholFilter === 'alcoholic') return drink.alcoolico === true;
+        if (currentAlcoholFilter === 'non-alcoholic') return drink.alcoolico === false;
+        return true; // 'all'
+      });
+
+      if (!searchTerm) {
+        filteredDrinks = [...baseList];
+      } else {
+        const startsWithMatches = [];
+        const containsMatches = [];
+
+        baseList.forEach(drink => {
+          const normName = normalizeText(drink.nome);
+          const normIng = normalizeText(drink.ingredientes);
+
+          if (normName.startsWith(searchTerm)) {
+            startsWithMatches.push(drink);
+          } else if (normName.includes(searchTerm) || normIng.includes(searchTerm)) {
+            containsMatches.push(drink);
+          }
+        });
+
+        filteredDrinks = [...startsWithMatches, ...containsMatches];
+      }
+
+      renderGrid(filteredDrinks);
+    }
+
+    /* ==========================================================================
+       RENDERIZAÇÃO DA GRADE (SEGURA / DOM)
+       ========================================================================== */
+    function renderGrid(drinks) {
+      statusContainer.style.display = 'none';
+      drinksGrid.style.display = 'grid';
+      drinksGrid.innerHTML = '';
+
+      resultsCount.textContent = `${drinks.length} ${drinks.length === 1 ? 'coquetel encontrado' : 'coquetéis encontrados'}`;
+
+      if (drinks.length === 0) {
+        drinksGrid.style.display = 'none';
+        statusContainer.style.display = 'block';
+        statusContainer.innerHTML = '<p>Nenhum coquetel encontrado com os critérios selecionados.</p>';
+        return;
+      }
+
+      drinks.forEach(drink => {
+        const card = document.createElement('article');
+        card.className = 'drink-card';
+        card.addEventListener('click', () => openModal(drink));
+
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'card-img-wrapper';
+
+        // Selo discreto de IA no canto superior esquerdo
+        const aiBadge = document.createElement('div');
+        aiBadge.className = 'ai-badge';
+        aiBadge.textContent = 'IA';
+        aiBadge.title = 'Imagem ilustrativa gerada com auxílio da IA';
+        imgWrapper.appendChild(aiBadge);
+
+        const finalImgPath = resolveImagePath(drink.img);
+
+        if (finalImgPath !== '') {
+          const img = document.createElement('img');
+          img.className = 'card-img';
+          img.src = finalImgPath;
+          img.alt = drink.nome;
+          img.loading = 'lazy';
+          img.onerror = () => {
+            imgWrapper.innerHTML = '';
+            imgWrapper.appendChild(aiBadge);
+            imgWrapper.appendChild(createPlaceholder());
+          };
+          imgWrapper.appendChild(img);
+        } else {
+          imgWrapper.appendChild(createPlaceholder());
+        }
+
+        const content = document.createElement('div');
+        content.className = 'card-content';
+
+        const method = document.createElement('div');
+        method.className = 'card-method';
+        method.textContent = drink.metodo || 'Clássico';
+
+        const title = document.createElement('h3');
+        title.className = 'card-title';
+        title.textContent = drink.nome;
+
+        const ingPreview = document.createElement('div');
+        ingPreview.className = 'card-ingredients-preview';
+        ingPreview.textContent = drink.ingredientes.replace(/;/g, ' • ');
+
+        const footer = document.createElement('div');
+        footer.className = 'card-footer';
+
+        const ingCount = drink.ingredientes ? drink.ingredientes.split(';').length : 0;
+        const countSpan = document.createElement('span');
+        countSpan.textContent = `${ingCount} ${ingCount === 1 ? 'ingrediente' : 'ingredientes'}`;
+
+        const linkSpan = document.createElement('span');
+        linkSpan.className = 'card-link';
+        linkSpan.textContent = 'Ver ficha →';
+
+        footer.appendChild(countSpan);
+        footer.appendChild(linkSpan);
+
+        content.appendChild(method);
+        content.appendChild(title);
+        content.appendChild(ingPreview);
+        content.appendChild(footer);
+
+        card.appendChild(imgWrapper);
+        card.appendChild(content);
+
+        drinksGrid.appendChild(card);
+      });
+    }
+
+    function createPlaceholder() {
+      const ph = document.createElement('div');
+      ph.className = 'card-placeholder';
+      ph.innerHTML = '<span>🍸</span><span>Coquetelaria</span>';
+      return ph;
+    }
+
+    /* ==========================================================================
+       MODAL DA FICHA TÉCNICA
+       ========================================================================== */
+    function openModal(drink) {
+      const imgContainer = document.getElementById('modalImageContainer');
+      imgContainer.innerHTML = '';
+
+      const finalImgPath = resolveImagePath(drink.img);
+
+      if (finalImgPath !== '') {
+        const img = document.createElement('img');
+        img.className = 'modal-header-img';
+        img.src = finalImgPath;
+        img.alt = drink.nome;
+        imgContainer.appendChild(img);
+      }
+
+      document.getElementById('modalTitle').textContent = drink.nome;
+      document.getElementById('modalMethod').textContent = drink.metodo;
+
+      const ingList = document.getElementById('modalIngredients');
+      ingList.innerHTML = '';
+
+      if (drink.ingredientes) {
+        drink.ingredientes.split(';').forEach(item => {
+          const cleanItem = item.trim();
+          if (cleanItem) {
+            const li = document.createElement('li');
+            li.textContent = cleanItem;
+            ingList.appendChild(li);
+          }
+        });
+      }
+
+      setModalSection('modalGuarnicao', 'guarnicaoSection', drink.guarnicao);
+      setModalSection('modalPreparo', 'preparoSection', drink.preparo);
+      setModalSection('modalBackground', 'backgroundSection', drink.background);
+
+      drinkModal.classList.add('active');
+      drinkModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+
+    function setModalSection(contentId, sectionId, value) {
+      const contentEl = document.getElementById(contentId);
+      const sectionEl = document.getElementById(sectionId);
+
+      if (value && value.trim() !== '') {
+        contentEl.textContent = value;
+        sectionEl.style.display = 'block';
+      } else {
+        sectionEl.style.display = 'none';
+      }
+    }
+
+    function closeModal() {
+      drinkModal.classList.remove('active');
+      drinkModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    /* ==========================================================================
+       EVENT LISTENERS
+       ========================================================================== */
+    function setupEventListeners() {
+      searchInput.addEventListener('input', applyFilters);
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          currentAlcoholFilter = e.target.getAttribute('data-filter');
+          applyFilters();
+        });
+      });
+
+      modalCloseBtn.addEventListener('click', closeModal);
+
+      drinkModal.addEventListener('click', (e) => {
+        if (e.target === drinkModal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drinkModal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+    }
+
+    /* ==========================================================================
+       MENSAGENS DE STATUS E ERRO
+       ========================================================================== */
+    function showLoading(msg) {
+      drinksGrid.style.display = 'none';
+      statusContainer.style.display = 'block';
+      statusContainer.innerHTML = `
+        <div class="spinner"></div>
+        <p>${msg}</p>
+      `;
+    }
+
+    function showError(msg) {
+      drinksGrid.style.display = 'none';
+      statusContainer.style.display = 'block';
+      statusContainer.innerHTML = `
+        <p style="color: #ff6b6b; margin-bottom: 12px;">${msg}</p>
+        <button class="btn-retry" onclick="initApp()">Tentar Novamente</button>
+      `;
+    }
+  </script>
+</body>
+</html>
